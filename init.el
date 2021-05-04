@@ -11,6 +11,9 @@
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
+(add-to-list 'package-pinned-packages '(cider . "melpa-stable") t)
+(add-to-list 'package-pinned-packages '(magit . "melpa-stable") t)
+
 ;; Load and activate emacs packages. Do this first so that the
 ;; packages are loaded before you start trying to modify them.
 ;; This also sets the load path.
@@ -22,21 +25,66 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(unless (package-installed-p 'clojure-mode)
-  (package-install 'clojure-mode))
+;; The packages you want installed. You can also install these
+;; manually with M-x package-install
+;; Add in your own as you wish:
+(defvar my-packages
+  '(;; makes handling lisp expressions much, much easier
+    ;; Cheatsheet: http://www.emacswiki.org/emacs/PareditCheatsheet
+    paredit
 
-(unless (package-installed-p 'cider)
-  (package-install 'cider))
+    ;; key bindings and code colorization for Clojure
+    ;; https://github.com/clojure-emacs/clojure-mode
+    clojure-mode
+
+    ;; integration with a Clojure REPL
+    ;; https://github.com/clojure-emacs/cider
+    cider
+
+    ;; colorful parenthesis matching
+    rainbow-delimiters
+
+    ;; git integration
+    magit
+    
+    ;; theme
+    zenburn-theme
+    color-theme-sanityinc-tomorrow))
+
+(dolist (p my-packages)
+  (when (not (package-installed-p p))
+    (package-install p)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(cider clojure-mode)))
+ '(custom-enabled-themes '(sanityinc-tomorrow-blue))
+ '(custom-safe-themes
+   '("82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" default))
+ '(package-selected-packages '(magit rainbow-delimiters paredit cider clojure-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(add-hook 'clojure-mode-hook #'paredit-mode)
+(add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
+
+;; hide startup screen
+(setq inhibit-startup-screen t)
+
+;; show line and column number
+(global-linum-mode 1)
+(setq linum-format "%3d ")
+(setq column-number-mode t)
+
+;; replace yes-no to y-n
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; apply theme
+;(load-theme 'zenburn t)
+(require 'color-theme-sanityinc-tomorrow)
