@@ -4,6 +4,7 @@
 
 ;; Define package repositories
 (require 'package)
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (add-to-list 'package-archives
              '("tromey" . "http://tromey.com/elpa/") t)
@@ -12,6 +13,7 @@
 ;(add-to-list 'package-archives
  ;            '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
+(add-to-list 'package-pinned-packages '(company . "gnu") t)
 (add-to-list 'package-pinned-packages '(cider . "melpa") t)
 (add-to-list 'package-pinned-packages '(magit . "melpa") t)
 
@@ -42,6 +44,9 @@
     ;; https://github.com/clojure-emacs/cider
     cider
 
+    ;; company-mode for auto completion
+    company
+    
     ;; colorful parenthesis matching
     rainbow-delimiters
 
@@ -71,6 +76,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(global-company-mode)
+(add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
+(add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
 
 (add-hook 'clojure-mode-hook #'paredit-mode)
 (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
