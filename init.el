@@ -4,15 +4,16 @@
 
 ;; Define package repositories
 (require 'package)
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (add-to-list 'package-archives
              '("tromey" . "http://tromey.com/elpa/") t)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
-(add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+;(add-to-list 'package-archives
+ ;            '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
-(add-to-list 'package-pinned-packages '(cider . "melpa-stable") t)
-(add-to-list 'package-pinned-packages '(magit . "melpa-stable") t)
+(add-to-list 'package-pinned-packages '(cider . "melpa") t)
+(add-to-list 'package-pinned-packages '(magit . "melpa") t)
 
 ;; Load and activate emacs packages. Do this first so that the
 ;; packages are loaded before you start trying to modify them.
@@ -88,3 +89,15 @@
 ;; apply theme
 ;(load-theme 'zenburn t)
 (require 'color-theme-sanityinc-tomorrow)
+
+;; set utf-8 & korean
+(set-language-environment "Korean")
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
+;; turn off back up
+(setq make-backup-files nil)
+(setq auto-save-default nil)
