@@ -108,5 +108,11 @@
 (prefer-coding-system 'utf-8)
 
 ;; turn off back up
+(setq backup-inhibited t)
 (setq make-backup-files nil)
 (setq auto-save-default nil)
+
+;; full screen on start up
+(custom-set-variables
+ '(initial-frame-alist (quote ((fullscreen . maximized)))))
+(set-frame-parameter nil 'fullscreen 'fullboth)
