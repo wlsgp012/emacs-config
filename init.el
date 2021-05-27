@@ -52,7 +52,10 @@
 
     ;; git integration
     magit
-    
+
+    ;; project management
+    projectile
+        
     ;; theme
     zenburn-theme
     color-theme-sanityinc-tomorrow))
@@ -69,6 +72,7 @@
  '(custom-enabled-themes '(sanityinc-tomorrow-blue))
  '(custom-safe-themes
    '("82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" default))
+ '(initial-frame-alist '((fullscreen . maximized)))
  '(package-selected-packages '(magit rainbow-delimiters paredit cider clojure-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -77,10 +81,12 @@
  ;; If there is more than one, they won't work right.
  )
 
+;; for company mode
 (global-company-mode)
 (add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
 (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
 
+;; for clojure
 (add-hook 'clojure-mode-hook #'paredit-mode)
 (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
 
@@ -113,6 +119,9 @@
 (setq auto-save-default nil)
 
 ;; full screen on start up
-(custom-set-variables
- '(initial-frame-alist (quote ((fullscreen . maximized)))))
 (set-frame-parameter nil 'fullscreen 'fullboth)
+
+;; for projectile
+(require 'projectile)
+(projectile-global-mode)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)

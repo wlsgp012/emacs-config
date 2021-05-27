@@ -9,5 +9,6 @@ projectile.cache
 auto-save-list
 backups
 melpa-stable
+melpa
 archive-contents
 *.elc
